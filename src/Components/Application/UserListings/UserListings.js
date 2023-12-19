@@ -169,7 +169,9 @@ const UserListings = () => {
       filterParams.push(`mobile=${encodeURIComponent(providerFilters.phone)}`);
     }
     if (providerFilters.storeName.trim() !== "") {
-      filterParams.push(`storeName=${encodeURIComponent(providerFilters.storeName)}`);
+      filterParams.push(
+        `storeName=${encodeURIComponent(providerFilters.storeName)}`
+      );
     }
 
     const queryString = filterParams.join("&");
@@ -186,14 +188,20 @@ const UserListings = () => {
   }, [isAdmin, page, rowsPerPage]);
 
   useEffect(() => {
-    navigation.toPathWithQuery(`${location.pathname}`, evalQueryString(location.search, { view }));
+    navigation.toPathWithQuery(
+      `${location.pathname}`,
+      evalQueryString(location.search, { view })
+    );
   }, [view]);
 
   return (
     <div>
       <div className="container mx-auto my-8">
         <div className="mb-4 flex flex-row justify-between items-center">
-          <label style={{ color: theme.palette.primary.main }} className="font-semibold text-2xl">
+          <label
+            style={{ color: theme.palette.primary.main }}
+            className="font-semibold text-2xl"
+          >
             User Listings
           </label>
         </div>
@@ -216,7 +224,9 @@ const UserListings = () => {
             color="primary"
             onClick={""}
           >
-            <Link to={isAdmin ? "/invite-admin" : "/invite-provider"}>Invite {isAdmin ? "Admin" : "Provider"}</Link>
+            <Link to={isAdmin ? "/invite-admin" : "/invite-provider"}>
+              Invite {isAdmin ? "Admin" : "Provider"}
+            </Link>
           </Button>
         </div>
 

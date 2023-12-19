@@ -1,8 +1,19 @@
 import React, { useState } from "react";
-import { Button, FormControl, FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import RenderInput from "../../../utils/RenderInput";
-import { areObjectsEqual, isEmailValid, isNumberOnly, isPhoneNoValid } from "../../../utils/validations";
+import {
+  areObjectsEqual,
+  isEmailValid,
+  isNumberOnly,
+  isPhoneNoValid,
+} from "../../../utils/validations";
 import { useEffect } from "react";
 import { getCall, postCall } from "../../../Api/axios";
 import cogoToast from "cogo-toast";
@@ -160,8 +171,8 @@ const bankFields = [
 ];
 
 const categoriesList = Object.entries(PRODUCT_CATEGORY).map(([key, value]) => {
-    return { key: value, value: key };
-})
+  return { key: value, value: key };
+});
 
 let storeFields = [
   // {
@@ -321,10 +332,18 @@ const ProviderDetails = ({ isFromUserListing = false }) => {
 
   const [storeDetailFields, setStoreDetailFields] = useState(storeFields);
   const [storeStatus, setStoreStatus] = useState("enabled");
-  const [temporaryClosedTimings, setTemporaryClosedTimings] = useState({ from: "00:00", to: "00:00" });
-  const [temporaryClosedDays, setTemporaryClosedDays] = useState({ from: 1, to: 5 });
+  const [temporaryClosedTimings, setTemporaryClosedTimings] = useState({
+    from: "00:00",
+    to: "00:00",
+  });
+  const [temporaryClosedDays, setTemporaryClosedDays] = useState({
+    from: 1,
+    to: 5,
+  });
   const [storeTimings, setStoreTimings] = useState([...defaultStoreTimings]);
-  const [originalStoreTimings, setOriginalStoreTimings] = useState([...defaultStoreTimings]);
+  const [originalStoreTimings, setOriginalStoreTimings] = useState([
+    ...defaultStoreTimings,
+  ]);
   const [providerDetails, setProviderDetails] = useState({});
   const [kycDetails, setKycDetails] = useState({});
   const [bankDetails, setBankDetails] = useState({});
@@ -467,16 +486,18 @@ const ProviderDetails = ({ isFromUserListing = false }) => {
         building: res.providerDetail?.storeDetails?.address?.building || "",
         area_code: res.providerDetail?.storeDetails?.address?.area_code || "",
         locality: res.providerDetail?.storeDetails?.address?.locality || "",
-        logo: res?.providerDetail?.storeDetails?.logo?.url   || "",
+        logo: res?.providerDetail?.storeDetails?.logo?.url || "",
         logo_path: res?.providerDetail?.storeDetails?.logo?.path || "",
 
-        holidays: res?.providerDetail?.storeDetails?.storeTiming?.holidays || [],
+        holidays:
+          res?.providerDetail?.storeDetails?.storeTiming?.holidays || [],
         radius: res?.providerDetail?.storeDetails?.radius?.value || "",
         logisticsBppId: res?.providerDetail?.storeDetails?.logisticsBppId || "",
       };
 
       const fulfillments = res.providerDetail.storeDetails.fulfillments;
-      const { supportedFulfillments, fulfillmentDetails } = getAvailableFulfillments(fulfillments);
+      const { supportedFulfillments, fulfillmentDetails } =
+        getAvailableFulfillments(fulfillments);
 
       setSupportedFulfillments(supportedFulfillments);
       setFulfillmentDetails((prevDetails) => ({
@@ -491,9 +512,17 @@ const ProviderDetails = ({ isFromUserListing = false }) => {
       setTemporaryClosedDays(storeTimingDetails.closedDays);
 
       setStoreDetails(Object.assign({}, JSON.parse(JSON.stringify(storeData))));
-      setDefaultStoreDetails(Object.assign({}, JSON.parse(JSON.stringify(storeData))));
-      setStoreTimings(res?.providerDetail?.storeDetails?.storeTiming?.enabled || defaultStoreTimings);
-      setOriginalStoreTimings(res?.providerDetail?.storeDetails?.storeTiming?.enabled || defaultStoreTimings);
+      setDefaultStoreDetails(
+        Object.assign({}, JSON.parse(JSON.stringify(storeData)))
+      );
+      setStoreTimings(
+        res?.providerDetail?.storeDetails?.storeTiming?.enabled ||
+          defaultStoreTimings
+      );
+      setOriginalStoreTimings(
+        res?.providerDetail?.storeDetails?.storeTiming?.enabled ||
+          defaultStoreTimings
+      );
     } catch (error) {
       console.log(error);
     }
@@ -522,7 +551,9 @@ const ProviderDetails = ({ isFromUserListing = false }) => {
       });
       return acc;
     }, []);
-    return values.some((value) => value === "") ? "Please fix all details of timings!" : "";
+    return values.some((value) => value === "")
+      ? "Please fix all details of timings!"
+      : "";
   };
 
   const validate = () => {
@@ -540,22 +571,32 @@ const ProviderDetails = ({ isFromUserListing = false }) => {
         ? "Please enter a valid mobile number"
         : "";
 
-    formErrors.category = storeDetails.category.trim() === "" ? "Supported Product Category is required" : "";
+    formErrors.category =
+      storeDetails.category.trim() === ""
+        ? "Supported Product Category is required"
+        : "";
     // formErrors.location = storeDetails.location.trim() === '' ? 'Location is required' : ''
     if (storeDetails.location_availability === "city") {
-      formErrors.cities = storeDetails.cities.length === 0 ? "City is required" : "";
+      formErrors.cities =
+        storeDetails.cities.length === 0 ? "City is required" : "";
     } else {
     }
-    formErrors.country = storeDetails.country.trim() === "" ? "Country is required" : "";
-    formErrors.state = storeDetails.state.trim() === "" ? "State is required" : "";
-    formErrors.address_city = storeDetails.address_city.trim() === "" ? "City is required" : "";
-    formErrors.building = storeDetails.building.trim() === "" ? "Building is required" : "";
-    formErrors.area_code = storeDetails.area_code.trim() === "" ? "PIN Code is required" : "";
+    formErrors.country =
+      storeDetails.country.trim() === "" ? "Country is required" : "";
+    formErrors.state =
+      storeDetails.state.trim() === "" ? "State is required" : "";
+    formErrors.address_city =
+      storeDetails.address_city.trim() === "" ? "City is required" : "";
+    formErrors.building =
+      storeDetails.building.trim() === "" ? "Building is required" : "";
+    formErrors.area_code =
+      storeDetails.area_code.trim() === "" ? "PIN Code is required" : "";
     formErrors.logo = storeDetails.logo.trim() === "" ? "Logo is required" : "";
 
     if (!isFromUserListing) {
       if (storeStatus === "enabled") {
-        formErrors.holidays = storeDetails.holidays.length === 0 ? "Holidays are required" : "";
+        formErrors.holidays =
+          storeDetails.holidays.length === 0 ? "Holidays are required" : "";
         formErrors.storeTimes = getStoreTimesErrors();
       } else {
         formErrors.holidays = "";
@@ -603,7 +644,9 @@ const ProviderDetails = ({ isFromUserListing = false }) => {
       supportedFulfillments.selfPickup !== false
         ? fulfillmentDetails.selfPickupDetails?.selfPickupMobile?.trim() === ""
           ? "Mobile Number is required"
-          : !isPhoneNoValid(fulfillmentDetails.selfPickupDetails?.selfPickupMobile)
+          : !isPhoneNoValid(
+              fulfillmentDetails.selfPickupDetails?.selfPickupMobile
+            )
           ? "Please enter a valid mobile number"
           : ""
         : "";
@@ -611,11 +654,15 @@ const ProviderDetails = ({ isFromUserListing = false }) => {
     if (supportedFulfillments.deliveryAndSelfPickup) {
       formErrors.deliveryAndSelfPickupDetails = {};
 
-      const deliveryAndSelfPickupDetails = fulfillmentDetails?.deliveryAndSelfPickupDetails || {};
+      const deliveryAndSelfPickupDetails =
+        fulfillmentDetails?.deliveryAndSelfPickupDetails || {};
       const deliveryEmail = deliveryAndSelfPickupDetails.deliveryEmail?.trim();
-      const deliveryMobile = deliveryAndSelfPickupDetails.deliveryMobile?.trim();
-      const selfPickupEmail = deliveryAndSelfPickupDetails.selfPickupEmail?.trim();
-      const selfPickupMobile = deliveryAndSelfPickupDetails.selfPickupMobile?.trim();
+      const deliveryMobile =
+        deliveryAndSelfPickupDetails.deliveryMobile?.trim();
+      const selfPickupEmail =
+        deliveryAndSelfPickupDetails.selfPickupEmail?.trim();
+      const selfPickupMobile =
+        deliveryAndSelfPickupDetails.selfPickupMobile?.trim();
 
       formErrors.deliveryAndSelfPickupDetails.deliveryEmail = !deliveryEmail
         ? "Delivery Email is required"
@@ -635,11 +682,12 @@ const ProviderDetails = ({ isFromUserListing = false }) => {
         ? "Please enter a valid email address"
         : "";
 
-      formErrors.deliveryAndSelfPickupDetails.selfPickupMobile = !selfPickupMobile
-        ? "Mobile Number is required"
-        : !isPhoneNoValid(selfPickupMobile)
-        ? "Please enter a valid mobile number"
-        : "";
+      formErrors.deliveryAndSelfPickupDetails.selfPickupMobile =
+        !selfPickupMobile
+          ? "Mobile Number is required"
+          : !isPhoneNoValid(selfPickupMobile)
+          ? "Please enter a valid mobile number"
+          : "";
 
       // Check if all nested properties are empty, then delete the entire object from formErrors
       if (
@@ -654,12 +702,18 @@ const ProviderDetails = ({ isFromUserListing = false }) => {
     }
 
     if (storeStatus === "closed") {
-      if (temporaryClosedTimings.from === temporaryClosedTimings.to && temporaryClosedTimings.from !== "Invalid Date") {
-        formErrors.temporaryClosedTimings = "Opening and closing times cannot be the same";
+      if (
+        temporaryClosedTimings.from === temporaryClosedTimings.to &&
+        temporaryClosedTimings.from !== "Invalid Date"
+      ) {
+        formErrors.temporaryClosedTimings =
+          "Opening and closing times cannot be the same";
       } else if (temporaryClosedTimings.from === "Invalid date") {
-        formErrors.temporaryClosedTimings = "Please provide a valid opening time";
+        formErrors.temporaryClosedTimings =
+          "Please provide a valid opening time";
       } else if (temporaryClosedTimings.to === "Invalid date") {
-        formErrors.temporaryClosedTimings = "Please provide a valid closing time";
+        formErrors.temporaryClosedTimings =
+          "Please provide a valid closing time";
       } else {
         formErrors.temporaryClosedTimings = "";
       }
@@ -667,7 +721,7 @@ const ProviderDetails = ({ isFromUserListing = false }) => {
 
     setErrors(formErrors);
     if (Object.values(formErrors).some((val) => val !== "")) {
-      console.log(formErrors)
+      console.log(formErrors);
       cogoToast.error("Please fill in all required data!");
     }
     return !Object.values(formErrors).some((val) => val !== "");
@@ -676,7 +730,10 @@ const ProviderDetails = ({ isFromUserListing = false }) => {
   const anyChangeInData = () => {
     // TODO: debug following
     let is_form_updated = !areObjectsEqual(storeDetails, defaultStoreDetails);
-    let is_store_time_updated = !areObjectsEqual(storeTimings, originalStoreTimings);
+    let is_store_time_updated = !areObjectsEqual(
+      storeTimings,
+      originalStoreTimings
+    );
     //return is_form_updated || is_store_time_updated;
     return true;
   };
@@ -713,12 +770,16 @@ const ProviderDetails = ({ isFromUserListing = false }) => {
         type: "delivery&pickup",
         contact: {
           delivery: {
-            email: fulfillmentDetails.deliveryAndSelfPickupDetails.deliveryEmail,
-            phone: fulfillmentDetails.deliveryAndSelfPickupDetails.deliveryMobile,
+            email:
+              fulfillmentDetails.deliveryAndSelfPickupDetails.deliveryEmail,
+            phone:
+              fulfillmentDetails.deliveryAndSelfPickupDetails.deliveryMobile,
           },
           pickup: {
-            email: fulfillmentDetails.deliveryAndSelfPickupDetails.selfPickupEmail,
-            phone: fulfillmentDetails.deliveryAndSelfPickupDetails.selfPickupMobile,
+            email:
+              fulfillmentDetails.deliveryAndSelfPickupDetails.selfPickupEmail,
+            phone:
+              fulfillmentDetails.deliveryAndSelfPickupDetails.selfPickupMobile,
           },
         },
       };
@@ -738,7 +799,7 @@ const ProviderDetails = ({ isFromUserListing = false }) => {
     return storeTiming;
   };
 
-  const startWithHttpRegex = new RegExp('^http');
+  const startWithHttpRegex = new RegExp("^http");
 
   const onUpdate = () => {
     if (anyChangeInData() && validate()) {
@@ -764,7 +825,8 @@ const ProviderDetails = ({ isFromUserListing = false }) => {
         locality = "",
       } = storeDetails;
 
-      const locationAvailability = location_availability === "pan_india" ? true : false;
+      const locationAvailability =
+        location_availability === "pan_india" ? true : false;
       const addressDetails = {
         building: building,
         city: address_city,
@@ -774,9 +836,15 @@ const ProviderDetails = ({ isFromUserListing = false }) => {
         locality: locality,
       };
       let iso8601 = "";
-      if (storeDetails.frequency && storeDetails.StoreTimeType === "frequency") {
+      if (
+        storeDetails.frequency &&
+        storeDetails.StoreTimeType === "frequency"
+      ) {
         // Create a duration object with the hours you want to convert
-        const duration = moment.duration(parseInt(storeDetails.frequency), "hours");
+        const duration = moment.duration(
+          parseInt(storeDetails.frequency),
+          "hours"
+        );
 
         // Format the duration in ISO 8601 format
         iso8601 = duration.toISOString();
@@ -814,10 +882,10 @@ const ProviderDetails = ({ isFromUserListing = false }) => {
       } else {
       }
 
-      if(!startWithHttpRegex.test(storeDetails.logo)){
-        payload.logo = logo
+      if (!startWithHttpRegex.test(storeDetails.logo)) {
+        payload.logo = logo;
       } else {
-        payload.logo = logo_path
+        payload.logo = logo_path;
       }
 
       postCall(url, payload)
@@ -875,15 +943,30 @@ const ProviderDetails = ({ isFromUserListing = false }) => {
               />
               <p className="text-2xl font-semibold mb-4">Provider Details</p>
               {providerFields.map((item) => (
-                <RenderInput previewOnly={true} item={item} state={providerDetails} statehandler={setProviderDetails} />
+                <RenderInput
+                  previewOnly={true}
+                  item={item}
+                  state={providerDetails}
+                  statehandler={setProviderDetails}
+                />
               ))}
               <p className="text-2xl font-semibold mb-4 mt-14">KYC Details</p>
               {kycFields.map((item) => (
-                <RenderInput previewOnly={true} item={item} state={kycDetails} statehandler={setKycDetails} />
+                <RenderInput
+                  previewOnly={true}
+                  item={item}
+                  state={kycDetails}
+                  statehandler={setKycDetails}
+                />
               ))}
               <p className="text-2xl font-semibold mb-4 mt-14">Bank Details</p>
               {bankFields.map((item) => (
-                <RenderInput previewOnly={true} item={item} state={bankDetails} statehandler={setBankDetails} />
+                <RenderInput
+                  previewOnly={true}
+                  item={item}
+                  state={bankDetails}
+                  statehandler={setBankDetails}
+                />
               ))}
               <p className="text-2xl font-semibold mb-4 mt-14">Store Details</p>
               {storeDetailFields.map((item) => (
@@ -923,7 +1006,9 @@ const ProviderDetails = ({ isFromUserListing = false }) => {
                     setFulfillmentDetails={setFulfillmentDetails}
                   />
 
-                  <p className="text-2xl font-semibold mb-2 mt-14">Store Timing</p>
+                  <p className="text-2xl font-semibold mb-2 mt-14">
+                    Store Timing
+                  </p>
                   <RenderInput
                     item={{
                       id: "radius",
@@ -958,8 +1043,17 @@ const ProviderDetails = ({ isFromUserListing = false }) => {
                             <FormControlLabel
                               key={i}
                               value={radioItem.value}
-                              control={<Radio size="small" checked={radioItem.value === storeStatus} />}
-                              label={<div className="text-sm font-medium text-[#606161]">{radioItem.key}</div>}
+                              control={
+                                <Radio
+                                  size="small"
+                                  checked={radioItem.value === storeStatus}
+                                />
+                              }
+                              label={
+                                <div className="text-sm font-medium text-[#606161]">
+                                  {radioItem.key}
+                                </div>
+                              }
                             />
                           ))}
                         </div>

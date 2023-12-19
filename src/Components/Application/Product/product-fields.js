@@ -314,7 +314,8 @@ export const allProductFieldDetails = [
   },
   {
     id: "images",
-    title: "Images (Select minimum 3 files with maximum size of 2Mb for each file)",
+    title:
+      "Images (Select minimum 3 files with maximum size of 2Mb for each file)",
     type: "upload",
     multiple: true,
     file_type: "product_image",
@@ -374,6 +375,12 @@ export const productDetailsFields = [
   "UOM",
 ];
 
-export const variationCommonFields = ["MRP", "purchasePrice", "quantity", "barcode", "images"];
+export const variationCommonFields = [
+  "MRP",
+  "purchasePrice",
+  "quantity",
+  "barcode",
+  "images",
+];
 
 export const UOMVariationFields = ["UOMValue"];

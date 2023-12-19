@@ -96,7 +96,9 @@ export default function Inventory() {
 
   const getProducts = async () => {
     try {
-      const res = await cancellablePromise(getCall(`/api/v1/products?limit=${rowsPerPage}&offset=${page}`));
+      const res = await cancellablePromise(
+        getCall(`/api/v1/products?limit=${rowsPerPage}&offset=${page}`)
+      );
       setProducts(res.data);
       setTotalRecords(res.count);
     } catch (error) {

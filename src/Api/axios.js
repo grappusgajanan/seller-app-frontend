@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios from "./localAxios";
 import Cookies from "js-cookie";
 import { deleteAllCookies } from "../utils/cookies";
 
-axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
+// axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
 function unAuthorizedResponse() {
   deleteAllCookies();

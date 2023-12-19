@@ -51,8 +51,8 @@ export default function Sidebar(props) {
     getUser(user_id).then((userData) => {
       getOrgDetails(userData.organization).then((org) => {
         setCategory(org?.storeDetails?.category);
-      })
-    })
+      });
+    });
   }, []);
 
   React.useEffect(() => {
@@ -64,7 +64,11 @@ export default function Sidebar(props) {
   }, [props.open, props.setOpen]);
 
   const toggleDrawer = (anchor, open) => (event) => {
-    if (event && event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
       return;
     }
     setState({ ...state, [anchor]: open });
@@ -81,8 +85,15 @@ export default function Sidebar(props) {
   }
 
   const list = (anchor) => (
-    <Box sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }} role="presentation">
-      <Stack direction="row" alignItems="center" style={{ padding: "8px 16px" }}>
+    <Box
+      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+      role="presentation"
+    >
+      <Stack
+        direction="row"
+        alignItems="center"
+        style={{ padding: "8px 16px" }}
+      >
         <img src={logo} alt="logo" style={{ height: "45px" }} />
         <Typography>SELLER APP</Typography>
       </Stack>
@@ -106,15 +117,20 @@ export default function Sidebar(props) {
           <List component="div" disablePadding>
             {user?.role?.name === "Organization Admin" && (
               <div>
-                <NavLink to="/application/inventory" className="no-underline text-black">
+                <NavLink
+                  to="/application/inventory"
+                  className="no-underline text-black"
+                >
                   <ListItemButton sx={{ pl: 4 }}>
                     <ListItemText primary="Inventory" />
                   </ListItemButton>
                 </NavLink>
-                <NavLink  to={{
+                <NavLink
+                  to={{
                     pathname: `/application/menu-category/${category}`,
                   }}
-                   className="no-underline text-black">
+                  className="no-underline text-black"
+                >
                   <ListItemButton sx={{ pl: 4 }}>
                     <ListItemText primary="Custom Menu" />
                   </ListItemButton>
@@ -129,25 +145,37 @@ export default function Sidebar(props) {
                     <ListItemText primary="Store Details" />
                   </ListItemButton>
                 </NavLink>
-                <NavLink to="/application/returns" className="no-underline	text-black">
+                <NavLink
+                  to="/application/returns"
+                  className="no-underline	text-black"
+                >
                   <ListItemButton sx={{ pl: 4 }}>
                     <ListItemText primary="Returns" />
                   </ListItemButton>
                 </NavLink>
               </div>
             )}
-            <NavLink to="/application/orders" className="no-underline	text-black">
+            <NavLink
+              to="/application/orders"
+              className="no-underline	text-black"
+            >
               <ListItemButton sx={{ pl: 4 }}>
                 <ListItemText primary="Orders" />
               </ListItemButton>
             </NavLink>
-            <NavLink to="/application/complaints" className="no-underline text-black">
+            <NavLink
+              to="/application/complaints"
+              className="no-underline text-black"
+            >
               <ListItemButton sx={{ pl: 4 }}>
                 <ListItemText primary="Complaints" />
               </ListItemButton>
             </NavLink>
             {user?.role?.name === "Super Admin" && (
-              <NavLink to="/application/user-listings" className="no-underline	text-black">
+              <NavLink
+                to="/application/user-listings"
+                className="no-underline	text-black"
+              >
                 <ListItemButton sx={{ pl: 4 }}>
                   <ListItemText primary="User Listings" />
                 </ListItemButton>
@@ -156,7 +184,10 @@ export default function Sidebar(props) {
           </List>
         </Collapse>
       </List>
-      <List style={{ position: "absolute", bottom: "0" }} className="w-full flex-row">
+      <List
+        style={{ position: "absolute", bottom: "0" }}
+        className="w-full flex-row"
+      >
         <ListItem key="Log Out" disablePadding>
           <ListItemButton onClick={() => logout()}>
             <LogoutIcon />

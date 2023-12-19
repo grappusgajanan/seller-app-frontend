@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useMemo, useState } from "react";
 import cogoToast from "cogo-toast";
-import axios from "axios";
+import axios from "../../Api/localAxios";
 import ScriptTag from "react-script-tag";
 import "./PlacePickerMap.css";
 
